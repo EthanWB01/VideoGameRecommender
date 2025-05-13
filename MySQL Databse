@@ -1,0 +1,40 @@
+CREATE DATABASE STEAMSQL;
+USE STEAMSQL;
+
+-- Users table stores user details
+CREATE TABLE Users (
+    User_ID SERIAL PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL
+);
+
+-- Genre table stores available genres
+CREATE TABLE Genre (
+    Genre_ID SERIAL PRIMARY KEY,
+    Genre_Name VARCHAR(50) NOT NULL
+);
+
+-- Game_Catalog table stores game details
+CREATE TABLE Game_Catalog (
+    Game_ID INT PRIMARY KEY,
+    Game_Name VARCHAR(100) NOT NULL,
+    Release_Date DATE
+);
+
+-- Users_Library table stores which games are in a user's library
+CREATE TABLE Users_Library (
+    User_Library_ID SERIAL PRIMARY KEY,
+    User_ID INT REFERENCES Users(User_ID),
+    Game_ID INT REFERENCES Game_Catalog(Game_ID)
+);
+
+
+CREATE TABLE Game_Genres (
+    Game_ID INT REFERENCES Game_Catalog(Game_ID),
+    Genre_ID INT REFERENCES Genre(Genre_ID),
+    PRIMARY KEY (Game_ID, Genre_ID)
+);
+
+CREATE TABLE Reccomend_Game (
+    Rec_Game VARCHAR(100),
+	User_ID INT REFERENCES Users(User_ID)
+);
